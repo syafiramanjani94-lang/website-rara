@@ -1,0 +1,544 @@
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello My Favorite</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #000000;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .star-glow {
+            text-shadow: 0 0 8px rgba(251, 113, 133, 0.8), 0 0 15px rgba(244, 63, 94, 0.5);
+        }
+
+        /* Smooth page transitions */
+        .page-transition {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        /* CSS untuk Animasi Hujan Love & Salju */
+        @keyframes fallAndSway {
+            0% {
+                transform: translateY(-40px) translateX(0) scale(0.7);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.9;
+            }
+            85% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(105vh) translateX(35px) scale(1.15);
+                opacity: 0;
+            }
+        }
+        .rain-particle {
+            position: absolute;
+            animation: fallAndSway linear infinite;
+        }
+        .spiderman-bubble {
+            border-radius: 9999px;
+            background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=200&q=80');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+        }
+        .spiderman-bubble-red {
+            border: 2px solid rgba(239, 68, 68, 0.85);
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.75), inset 0 0 12px rgba(220, 38, 38, 0.65);
+            filter: sepia(1) hue-rotate(-50deg) saturate(5) brightness(1.15);
+        }
+        .spiderman-bubble-pink {
+            border: 2px solid rgba(244, 114, 182, 0.85);
+            box-shadow: 0 0 16px rgba(244, 114, 182, 0.75), inset 0 0 12px rgba(236, 72, 153, 0.65);
+            filter: sepia(1) hue-rotate(240deg) saturate(6) brightness(1.25);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 relative bg-black">
+
+    <!-- Latar Belakang Musik Audio -->
+    <audio id="backgroundMusic" src="https://docs.google.com/uc?export=download&id=1WjReYSs3CyFjUfGLUVfA5WnWmPv4gNM9" loop preload="auto"></audio>
+
+    <!-- Tombol Kontrol Musik Mengambang di Pojok Kanan Atas -->
+    <button id="musicToggleBtn" class="fixed top-4 right-4 z-50 bg-black/80 hover:bg-rose-950/80 text-rose-300 border border-rose-900/60 p-3 rounded-full shadow-lg backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group" title="Putar/Hentikan Musik">
+        <svg id="musicIconOn" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 animate-spin" style="animation-duration: 4s;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+        </svg>
+        <span class="absolute -bottom-7 right-0 whitespace-nowrap text-[10px] tracking-wider uppercase bg-rose-950/90 text-rose-300 px-2 py-0.5 rounded-full border border-rose-800/50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            🎵 Music
+        </span>
+    </button>
+
+    <!-- Ambient background glow elements -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-red-950/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-rose-950/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Background 10 Bulan Sabit (Crescent Moons) Warna Kuning Bercahaya Estetik di Halaman 1 & 2 -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-80">
+        <div class="absolute top-[8%] left-[10%] text-yellow-300 text-lg md:text-2xl animate-pulse select-none filter drop-shadow-[0_0_10px_rgba(253,224,71,0.9)]" style="animation-duration: 4s;">☪</div>
+        <div class="absolute top-[18%] right-[15%] text-yellow-200 text-sm md:text-xl animate-pulse select-none filter drop-shadow-[0_0_8px_rgba(254,240,138,0.8)]" style="animation-duration: 6s;">☪</div>
+        <div class="absolute top-[35%] left-[8%] text-amber-300 text-base md:text-2xl animate-pulse select-none filter drop-shadow-[0_0_10px_rgba(252,211,77,0.9)]" style="animation-duration: 5s;">☪</div>
+        <div class="absolute top-[45%] right-[10%] text-yellow-300 text-lg md:text-2xl animate-pulse select-none filter drop-shadow-[0_0_10px_rgba(253,224,71,0.9)]" style="animation-duration: 7s;">☪</div>
+        <div class="absolute top-[65%] left-[12%] text-yellow-200 text-xs md:text-lg animate-pulse select-none filter drop-shadow-[0_0_8px_rgba(254,240,138,0.8)]" style="animation-duration: 4.5s;">☪</div>
+        <div class="absolute top-[75%] right-[14%] text-amber-300 text-sm md:text-xl animate-pulse select-none filter drop-shadow-[0_0_10px_rgba(252,211,77,0.9)]" style="animation-duration: 5.5s;">☪</div>
+        <div class="absolute top-[88%] left-[20%] text-yellow-300 text-base md:text-xl animate-pulse select-none filter drop-shadow-[0_0_10px_rgba(253,224,71,0.9)]" style="animation-duration: 6.5s;">☪</div>
+        <div class="absolute top-[12%] left-[45%] text-yellow-200 text-xs md:text-base animate-pulse select-none filter drop-shadow-[0_0_8px_rgba(254,240,138,0.8)]" style="animation-duration: 5.2s;">☪</div>
+        <div class="absolute bottom-[10%] right-[40%] text-amber-300 text-sm md:text-xl animate-pulse select-none filter drop-shadow-[0_0_10px_rgba(252,211,77,0.9)]" style="animation-duration: 4.8s;">☪</div>
+        <div class="absolute top-[52%] left-[88%] text-yellow-300 text-base md:text-2xl animate-pulse select-none filter drop-shadow-[0_0_10px_rgba(253,224,71,0.9)]" style="animation-duration: 5.8s;">☪</div>
+    </div>
+
+    <!-- Container Hujan Global (Background Seluruh Layar untuk Halaman 2) -->
+    <div id="globalRainContainer" class="fixed inset-0 pointer-events-none z-0 overflow-hidden hidden"></div>
+
+    <!-- Halaman Pertama (Tanpa Kotak Card, Background Hitam Murni) -->
+    <div id="page1" class="w-full max-w-md text-center page-transition z-10 flex flex-col items-center justify-center p-6">
+        
+        <!-- Judul tanpa kotak card, langsung di background hitam -->
+        <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-2 bg-gradient-to-r from-white via-slate-200 to-rose-300 bg-clip-text text-transparent">
+            ℎ𝑖 𝑚𝑦 𝑓𝑎𝑣𝑜𝑟𝑖𝑡𝑒.
+        </h1>
+
+        <!-- AI Robot / Senyum Emoticon yang bisa diklik -->
+        <div id="aiRobotIcon" class="mb-6 inline-flex px-4 py-2 rounded-2xl bg-black/80 border border-rose-900/60 text-rose-400 shadow-xl cursor-pointer transform hover:scale-110 active:scale-95 transition-all duration-300 group relative" title="Tekan untuk menyapa!">
+            <!-- Efek pancaran AI/Cyber di belakang -->
+            <div class="absolute inset-0 rounded-2xl bg-rose-600/20 blur-md group-hover:bg-rose-500/40 transition-all"></div>
+            
+            <div class="relative z-10 flex items-center justify-center">
+                <!-- Emoji muka ekspresif, berubah saat diklik -->
+                <span id="robotEmoji" class="text-2xl md:text-3xl font-mono font-bold tracking-wider inline-block text-rose-300 filter drop-shadow-[0_0_8px_rgba(244,63,94,0.9)] transition-transform duration-300"> •̀ᴗ•́ </span>
+            </div>
+
+            <!-- Label kecil petunjuk audio -->
+            <span class="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] tracking-wider uppercase bg-rose-950/90 text-rose-300 px-2 py-0.5 rounded-full border border-rose-800/50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                🔊 Click Me
+            </span>
+        </div>
+        
+        <p class="text-slate-300 text-sm md:text-base mb-8 leading-relaxed max-w-sm">
+        
+        </p>
+
+        <!-- Tombol Open / Buka Kejutan -->
+        <div class="flex flex-col sm:flex-row gap-3 w-full max-w-xs">
+            <button id="goToPage2" class="w-full py-4 px-6 rounded-2xl bg-[#800020] hover:bg-[#990026] text-white font-semibold text-base shadow-lg shadow-rose-950/80 hover:shadow-rose-900/90 active:scale-[0.98] transition-all duration-200 border border-rose-900/60 cursor-pointer flex items-center justify-center space-x-2 group">
+                <span>Open</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Halaman Kedua (Tersembunyi Awalnya) - Background hitam total dengan bintik merah hitam di seluruh card -->
+    <div id="page2" class="w-full max-w-lg bg-[#050505] relative overflow-hidden backdrop-blur-xl rounded-3xl shadow-2xl border border-rose-950/60 p-6 md:p-8 text-center page-transition hidden opacity-0 z-10 flex flex-col items-center max-h-[90vh] overflow-y-auto">
+        
+        <!-- Background Pattern Merah Bintik Hitam di Seluruh Halaman 2 -->
+        <div class="absolute inset-0 bg-[#050505] z-0"></div>
+        <div class="absolute inset-0 opacity-45 bg-[radial-gradient(#ff1744_1.5px,#000000_1.5px)] [background-size:16px_16px] pointer-events-none z-0"></div>
+        <div class="absolute inset-0 opacity-35 bg-[radial-gradient(#880015_2px,transparent_2px)] [background-size:24px_24px] [background-position:12px_12px] pointer-events-none z-0"></div>
+
+        <!-- Container untuk Hujan Love & Cahaya Salju Putih -->
+        <div id="particleRainContainer" class="absolute inset-0 pointer-events-none z-10 overflow-hidden"></div>
+
+        <div class="mb-2 relative z-20">
+            <span class="text-xs uppercase tracking-widest text-rose-400 font-semibold bg-black/80 px-3 py-1 rounded-full border border-rose-900/50">
+                𝑺𝑻𝑶𝑷𝑷𝑷𝑷
+            </span>
+        </div>
+        
+        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white mb-2 relative z-25">
+            𝘣𝘦𝘤𝘢𝘶𝘴𝘦 𝘪 𝘭𝘰𝘱𝘺𝘶!
+        </h2>
+        
+        <p id="instructionText" class="text-slate-300 text-xs md:text-sm mb-4 relative z-25">
+            jangan lupa pencet tombolnya yaww
+        </p>
+
+        <!-- Wadah Pemutar Video Google Drive di Halaman 2 -->
+        <div class="w-full mb-4 relative z-25 rounded-2xl overflow-hidden border border-rose-900/60 bg-black/60 shadow-xl">
+            <div class="relative w-full" style="padding-top: 56.25%;">
+                <iframe src="https://drive.google.com/file/d/1WjReYSs3CyFjUfGLUVfA5WnWmPv4gNM9/preview" class="absolute inset-0 w-full h-full border-0" allow="autoplay" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <!-- Wadah Animasi Bintang Membentuk Love -->
+        <div id="starHeartContainer" class="relative w-full h-64 md:h-72 rounded-2xl overflow-hidden flex items-center justify-center border border-rose-950/60 shadow-inner group z-20 bg-black/40">
+            
+            <!-- Gambar Gabungan Muka Spiderman di Tengah -->
+            <div class="absolute inset-0 flex items-center justify-center z-0">
+                <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shadow-2xl border-2 border-rose-500/30">
+                    <!-- Sisi Kiri (you) -->
+                    <div class="absolute inset-y-0 left-0 w-1/2 bg-cover bg-left z-0" style="background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=800&q=80'); filter: sepia(1) hue-rotate(-50deg) saturate(6) brightness(1.2);"></div>
+                    <div class="absolute inset-y-0 left-0 w-1/2 bg-red-600/30 mix-blend-color pointer-events-none"></div>
+
+                    <!-- Sisi Kanan (me) -->
+                    <div class="absolute inset-y-0 right-0 w-1/2 bg-cover bg-right z-0" style="background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=800&q=80'); filter: sepia(1) hue-rotate(240deg) saturate(7) brightness(1.3);"></div>
+                    <div class="absolute inset-y-0 right-0 w-1/2 bg-pink-500/40 mix-blend-color pointer-events-none"></div>
+
+                    <!-- Garis Pemisah Tengah yang Estetik -->
+                    <div class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] bg-gradient-to-b from-transparent via-rose-300 to-transparent z-10 shadow-[0_0_10px_rgba(244,63,94,0.9)]"></div>
+                </div>
+            </div>
+
+            <!-- Keterangan Visual Muka Setengah-Setengah -->
+            <div class="absolute bottom-2 left-2 z-20 opacity-95 flex items-center space-x-2 pointer-events-none text-xs font-bold tracking-widest uppercase bg-black/85 px-3 py-1.5 rounded-lg border border-rose-500/40 shadow-lg">
+                <span class="text-red-500 drop-shadow-[0_0_6px_rgba(239,68,68,0.9)]">🔴 you</span>
+                <span class="text-slate-400">|</span>
+                <span class="text-pink-400 drop-shadow-[0_0_6px_rgba(244,114,182,0.9)]">🌸 me</span>
+            </div>
+
+            <div id="placeholderText" class="absolute z-30 text-slate-100 text-sm font-semibold tracking-wide bg-black/85 px-4 py-2 rounded-xl backdrop-blur-md border border-rose-500/40 shadow-xl">
+                ✦ Tekan "Start Love" di bawah ✦
+            </div>
+        </div>
+
+        <!-- Tombol Start Love khusus halaman 2 -->
+        <button id="startLoveBtn" class="mt-6 py-3 px-8 rounded-xl bg-[#800020] hover:bg-[#990026] text-white font-semibold text-sm shadow-lg shadow-rose-950/50 hover:shadow-rose-900/60 active:scale-[0.98] transition-all duration-200 border border-rose-900/50 cursor-pointer flex items-center space-x-2 relative z-25">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span>Start Love</span>
+        </button>
+
+        <!-- Tombol Kembali -->
+        <button id="backToPage1" class="mt-6 py-3 px-6 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-sm font-medium transition-all duration-500 opacity-0 pointer-events-none hidden border border-slate-700/60 cursor-pointer flex items-center space-x-2 relative z-25">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Kembali</span>
+        </button>
+    </div>
+
+    <!-- JavaScript Interaksi & Pembuatan Bintang Love -->
+    <script>
+        const btnGo = document.getElementById('goToPage2');
+        const btnBack = document.getElementById('backToPage1');
+        const startLoveBtn = document.getElementById('startLoveBtn');
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const starContainer = document.getElementById('starHeartContainer');
+        const particleRainContainer = document.getElementById('particleRainContainer');
+        const globalRainContainer = document.getElementById('globalRainContainer');
+        const placeholderText = document.getElementById('placeholderText');
+        const instructionText = document.getElementById('instructionText');
+        const aiRobotIcon = document.getElementById('aiRobotIcon');
+        const robotEmoji = document.getElementById('robotEmoji');
+        
+        // Elemen Musik Latar
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicToggleBtn = document.getElementById('musicToggleBtn');
+        let isMusicPlaying = false;
+
+        backgroundMusic.volume = 0.6;
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                isMusicPlaying = false;
+                musicToggleBtn.classList.remove('border-rose-500', 'shadow-[0_0_15px_rgba(244,63,94,0.6)]');
+                musicToggleBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                    </svg>
+                    <span class="absolute -bottom-7 right-0 whitespace-nowrap text-[10px] tracking-wider uppercase bg-rose-950/90 text-rose-300 px-2 py-0.5 rounded-full border border-rose-800/50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">🎵 Muted</span>
+                `;
+            } else {
+                backgroundMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicToggleBtn.classList.add('border-rose-500', 'shadow-[0_0_15px_rgba(244,63,94,0.6)]');
+                    musicToggleBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 animate-spin text-rose-400" style="animation-duration: 4s;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                        </svg>
+                        <span class="absolute -bottom-7 right-0 whitespace-nowrap text-[10px] tracking-wider uppercase bg-rose-950/90 text-rose-300 px-2 py-0.5 rounded-full border border-rose-800/50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">🎵 Playing</span>
+                    `;
+                }).catch(err => {
+                    console.log("Autoplay blocked, waiting for user interaction");
+                });
+            }
+        }
+
+        musicToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMusic();
+        });
+
+        // Coba mainkan musik otomatis pada interaksi pertama halaman (mengatasi batasan autoplay browser)
+        document.body.addEventListener('click', function initAudioOnce() {
+            if (!isMusicPlaying) {
+                backgroundMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicToggleBtn.classList.add('border-rose-500', 'shadow-[0_0_15px_rgba(244,63,94,0.6)]');
+                }).catch(() => {});
+            }
+        }, { once: true });
+
+        let rainInterval = null;
+
+        // Fungsi Suara Cewek Ramah & Animasi Wajah Senyum Emoticon
+        function speakRobotGreeting() {
+            playClickSound();
+            robotEmoji.textContent = '˃ᴗ˂';
+            robotEmoji.style.transform = 'scale(1.3) rotate(5deg)';
+            
+            setTimeout(() => {
+                robotEmoji.style.transform = 'scale(1) rotate(0deg)';
+            }, 500);
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance("Hi, my favorite.");
+                utterance.rate = 1.0; 
+                utterance.pitch = 1.2; 
+                utterance.volume = 1.0;
+
+                const voices = window.speechSynthesis.getVoices();
+                const femaleVoice = voices.find(v => 
+                    v.lang.startsWith('en') && (
+                        v.name.toLowerCase().includes('female') || 
+                        v.name.toLowerCase().includes('woman') || 
+                        v.name.toLowerCase().includes('zira') || 
+                        v.name.toLowerCase().includes('samantha') || 
+                        v.name.toLowerCase().includes('victoria') ||
+                        v.name.toLowerCase().includes('google uk english female') ||
+                        v.name.toLowerCase().includes('google us english')
+                    )
+                ) || voices.find(v => v.lang.startsWith('en'));
+
+                if (femaleVoice) {
+                    utterance.voice = femaleVoice;
+                }
+
+                utterance.onend = () => {
+                    robotEmoji.textContent = '•̀ᴗ•́';
+                };
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                setTimeout(() => {
+                    robotEmoji.textContent = '•̀ᴗ•́';
+                }, 2000);
+            }
+        }
+
+        aiRobotIcon.addEventListener('click', () => {
+            speakRobotGreeting();
+        });
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+
+        // Fungsi Audio Web API untuk efek suara klik tombol
+        function playClickSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(580, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.08);
+
+                gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.08);
+            } catch (e) {
+                // Ignore audio context errors if blocked by browser policy
+            }
+        }
+
+        [btnGo, startLoveBtn, btnBack].forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    playClickSound();
+                });
+            }
+        });
+
+        // Fungsi Menghasilkan Efek Hujan Love, Cahaya Salju Putih Besar & Bubble Spiderman Merah/Pink
+        function createRainParticle(container, isGlobal) {
+            const particle = document.createElement('div');
+            particle.className = 'rain-particle select-none pointer-events-none';
+            
+            const rand = Math.random();
+            if (rand < 0.3) {
+                // Bubble gambar muka Spiderman Merah atau Pink (Ukuran Besar)
+                const isRed = Math.random() > 0.5;
+                particle.classList.add('spiderman-bubble', isRed ? 'spiderman-bubble-red' : 'spiderman-bubble-pink');
+                const size = isGlobal ? Math.floor(Math.random() * 24) + 46 : Math.floor(Math.random() * 18) + 38;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+            } else if (rand < 0.65) {
+                // Partikel Hati Besar
+                particle.innerHTML = Math.random() > 0.5 ? '💖' : '💗';
+                particle.style.fontSize = isGlobal ? `${Math.floor(Math.random() * 16) + 20}px` : `${Math.floor(Math.random() * 12) + 16}px`;
+                particle.style.filter = 'drop-shadow(0 0 6px rgba(244, 63, 94, 0.85))';
+            } else {
+                // Partikel Salju Putih Besar
+                particle.innerHTML = '❄';
+                particle.style.color = '#ffffff';
+                particle.style.fontSize = isGlobal ? `${Math.floor(Math.random() * 18) + 22}px` : `${Math.floor(Math.random() * 14) + 18}px`;
+                particle.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.7)';
+            }
+
+            const maxW = isGlobal ? window.innerWidth : container.clientWidth;
+            const startX = Math.random() * maxW;
+            const duration = isGlobal ? Math.random() * 4 + 5 : Math.random() * 3 + 3.5;
+
+            particle.style.left = `${startX}px`;
+            particle.style.top = `-65px`;
+            particle.style.animationDuration = `${duration}s`;
+
+            container.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, duration * 1000);
+        }
+
+        function startParticleRain() {
+            particleRainContainer.innerHTML = '';
+            globalRainContainer.innerHTML = '';
+            globalRainContainer.classList.remove('hidden');
+            
+            rainInterval = setInterval(() => {
+                if (particleRainContainer.childElementCount < 30) {
+                    createRainParticle(particleRainContainer, false);
+                }
+                if (globalRainContainer.childElementCount < 45) {
+                    createRainParticle(globalRainContainer, true);
+                }
+            }, 320);
+        }
+
+        // Fungsi Transisi ke Halaman Kedua
+        btnGo.addEventListener('click', () => {
+            btnBack.classList.add('opacity-0', 'pointer-events-none', 'hidden');
+            startLoveBtn.classList.remove('hidden', 'opacity-0');
+            startLoveBtn.disabled = false;
+            placeholderText.style.display = 'block';
+            instructionText.textContent = "jangan lupa pencet tombolnya yaww";
+            
+            const oldStars = starContainer.querySelectorAll('.star-node');
+            oldStars.forEach(s => s.remove());
+
+            if (rainInterval) clearInterval(rainInterval);
+            particleRainContainer.innerHTML = '';
+            globalRainContainer.innerHTML = '';
+
+            page1.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                page1.classList.add('hidden');
+                page2.classList.remove('hidden');
+                setTimeout(() => {
+                    page2.classList.remove('opacity-0');
+                    startParticleRain();
+                }, 50);
+            }, 300);
+        });
+
+        // Tombol Start Love diklik
+        startLoveBtn.addEventListener('click', () => {
+            placeholderText.style.display = 'none';
+            startLoveBtn.classList.add('opacity-0');
+            setTimeout(() => {
+                startLoveBtn.classList.add('hidden');
+            }, 300);
+
+            instructionText.textContent = "semoga kamu tetap seperti bintang tetap selalu indah";
+            
+            generateStarHeart();
+        });
+
+        // Fungsi Transisi Kembali ke Halaman Pertama
+        btnBack.addEventListener('click', () => {
+            if (rainInterval) clearInterval(rainInterval);
+            globalRainContainer.classList.add('hidden');
+            globalRainContainer.innerHTML = '';
+            page2.classList.add('opacity-0');
+            setTimeout(() => {
+                page2.classList.add('hidden');
+                page1.classList.remove('hidden');
+                setTimeout(() => {
+                    page1.classList.remove('opacity-0', 'scale-95');
+                }, 50);
+            }, 300);
+        });
+
+        // Fungsi Matematis untuk Membentuk Love dari Bintang-Bintang
+        function generateStarHeart() {
+            const totalStars = 120;
+            const totalDurationMs = 40000; // Diatur menjadi 40 detik
+            const intervalPerStar = totalDurationMs / totalStars; 
+            
+            const width = starContainer.clientWidth;
+            const height = starContainer.clientHeight;
+            const centerX = width / 2;
+            const centerY = height / 2 + 10;
+
+            for (let i = 0; i < totalStars; i++) {
+                const t = (i / totalStars) * Math.PI * 2;
+                
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+                const scale = Math.min(width, height) / 36;
+                const finalX = centerX + x * scale;
+                const finalY = centerY + y * scale;
+
+                const star = document.createElement('div');
+                star.className = 'star-node absolute text-rose-400 text-xs md:text-sm star-glow cursor-pointer transition-all duration-700 select-none opacity-0 scale-50';
+                star.innerHTML = i % 2 === 0 ? '✦' : '★';
+                star.style.left = `${finalX}px`;
+                star.style.top = `${finalY}px`;
+                
+                starContainer.appendChild(star);
+
+                setTimeout(() => {
+                    star.style.opacity = '1';
+                    star.style.transform = 'scale(1)';
+                }, i * intervalPerStar);
+
+                star.addEventListener('click', () => {
+                    playClickSound();
+                    star.style.color = '#ffffff';
+                    star.style.transform = 'scale(2.2) rotate(45deg)';
+                    setTimeout(() => {
+                        star.style.color = '#fb7185';
+                        star.style.transform = 'scale(1) rotate(0deg)';
+                    }, 600);
+                });
+            }
+
+            setTimeout(() => {
+                instructionText.textContent = "Lingkar cinta bintang telah sempurna terbentuk!";
+                btnBack.classList.remove('hidden');
+                setTimeout(() => {
+                    btnBack.classList.remove('opacity-0', 'pointer-events-none');
+                }, 50);
+            }, totalDurationMs + 800);
+        }
+    </script>
+</body>
+</html>
